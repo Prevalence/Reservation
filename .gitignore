@@ -22,7 +22,8 @@
 hs_err_pid*
 #Eclipse
 .classpath  
+*.settings
 .project  
 .DS_Store  
 /bin/
-
+/target/
