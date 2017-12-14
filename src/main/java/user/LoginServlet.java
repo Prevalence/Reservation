@@ -9,15 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class UserServlet
  */
-public class UserServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public UserServlet() {
+	public LoginServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -25,8 +24,14 @@ public class UserServlet extends HttpServlet {
 	 *      response)
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String userName = request.getParameter("userName");
+		String password = request.getParameter("password");
+		String loginResult = login(userName, password);
+		if ("success".equals(loginResult)) {
+			response.sendRedirect("orders.jsp");
+		} else if ("failure".equals(loginResult)) {
+			response.sendRedirect("registerFail.jsp");
+		}
 	}
 
 	/**
@@ -34,18 +39,20 @@ public class UserServlet extends HttpServlet {
 	 *      response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
 	/**
-	 * 登陆方法
+	 * 登陆
 	 * 
-	 * @param request
-	 * @param response
+	 * @param userName
+	 *            用户名
+	 * @param password
+	 *            密码
+	 * @return
 	 */
-	public void login(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("1111111");
+	private String login(String userName, String password) {
+		return "success";
 	}
 
 }

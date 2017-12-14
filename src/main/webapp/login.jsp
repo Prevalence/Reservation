@@ -7,7 +7,8 @@
 <title>Login Here</title>
 </head>
 <body>
-	<form name="form1" method="post" action="UserServlet">
+	<h2>登陆</h2>
+	<form name="form1" method="post" action="LoginServlet">
 		用户名：<input name="userName" type="text" id="username"
 			style="width: 120px"><br> <br> 密码：<input
 			name="password" type="text" id="password" style="width: 120px"><br>
