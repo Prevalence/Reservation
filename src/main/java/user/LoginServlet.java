@@ -1,10 +1,14 @@
 package user;
 
 import java.io.IOException;
+import java.sql.Connection;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import util.DBManager;
 
 /**
  * Servlet implementation class UserServlet
@@ -52,6 +56,7 @@ public class LoginServlet extends HttpServlet {
 	 * @return
 	 */
 	private String login(String userName, String password) {
+		Connection conn = DBManager.INSTANCE.getConnection();
 		return "success";
 	}
 
