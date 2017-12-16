@@ -2,6 +2,9 @@ package user;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -57,7 +60,20 @@ public class LoginServlet extends HttpServlet {
 	 */
 	private String login(String userName, String password) {
 		Connection conn = DBManager.INSTANCE.getConnection();
-		return "success";
+		final String SQL = "select password from user where userName=?";
+		try {
+			PreparedStatement preStatement = conn.prepareStatement(SQL);
+			preStatement.setString(1, userName);
+			ResultSet resultSet = preStatement.executeQuery();
+			String passwordInDatabase = resultSet.getString(0);
+			if (password.equals(passwordInDatabase)) {
+				return "success";
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return "failure";
 	}
 
 }

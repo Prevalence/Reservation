@@ -1,10 +1,17 @@
 package user;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import util.DBManager;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -55,7 +62,27 @@ public class RegisterServlet extends HttpServlet {
 	 * @return 注册结果
 	 */
 	private String register(String userName, String password) {
-		return "success";
+		Connection conn = DBManager.INSTANCE.getConnection();
+		final String SQL = "select * from user where userName=?";
+		final String SQLForAdd = "insert into user values(?,?)";
+		try {
+			PreparedStatement preStatement = conn.prepareStatement(SQL);
+			preStatement.setString(1, userName);
+			ResultSet resultSet = preStatement.executeQuery();
+			if (resultSet.getFetchSize() == 0) {
+				PreparedStatement preStatementForAdd = conn.prepareStatement(SQLForAdd);
+				preStatementForAdd.setString(1, userName);
+				preStatementForAdd.setString(2, password);
+				preStatementForAdd.execute();
+				return "success";
+			} else {
+				return "duplicate";
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return "duplicate";
 	}
 
 }
