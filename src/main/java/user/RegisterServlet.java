@@ -70,6 +70,7 @@ public class RegisterServlet extends HttpServlet {
 			preStatementForAdd.setString(1, userName);
 			preStatementForAdd.setString(2, password);
 			preStatementForAdd.execute();
+			preStatementForAdd.close();
 			return "success";
 		} catch (SQLIntegrityConstraintViolationException e) {
 			return "duplicate";

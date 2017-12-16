@@ -16,6 +16,12 @@
 		<description></description>
 		<servlet-class>user.RegisterServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>OrdersServlet</servlet-name>
+		<display-name>OrdersServlet</display-name>
+		<description></description>
+		<servlet-class>user.OrdersServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/LoginServlet</url-pattern>
@@ -23,6 +29,10 @@
 	<servlet-mapping>
 		<servlet-name>RegisterServlet</servlet-name>
 		<url-pattern>/RegisterServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>OrdersServlet</servlet-name>
+		<url-pattern>/OrdersServlet</url-pattern>
 	</servlet-mapping>
 
 	<!-- for JNDI Data Source -->

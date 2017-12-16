@@ -8,5 +8,15 @@
 </head>
 <body>
 	<h2>订单列表</h2>
+	<table width="" border="">
+		<thead>
+			<tr>
+				<th>姓名</th>
+				<th>性别</th>
+				<th>编号</th>
+				<th>年龄</th>
+			</tr>
+		</thead>
+	</table>
 </body>
 </html>

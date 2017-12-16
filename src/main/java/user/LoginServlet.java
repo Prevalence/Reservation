@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
 			ResultSet resultSet = preStatement.executeQuery();
 			resultSet.next();
 			String passwordInDatabase = resultSet.getString(1);
-
+			preStatement.close();
 			if (password.equals(passwordInDatabase)) {
 				return "success";
 			}
