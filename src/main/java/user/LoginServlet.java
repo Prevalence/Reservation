@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
 		if ("success".equals(loginResult)) {
 			response.sendRedirect("orders.jsp");
 		} else if ("failure".equals(loginResult)) {
-			response.sendRedirect("registerFail.jsp");
+			response.sendRedirect("loginFail.jsp");
 		}
 	}
 
@@ -65,14 +65,15 @@ public class LoginServlet extends HttpServlet {
 			PreparedStatement preStatement = conn.prepareStatement(SQL);
 			preStatement.setString(1, userName);
 			ResultSet resultSet = preStatement.executeQuery();
-			String passwordInDatabase = resultSet.getString(0);
+			resultSet.next();
+			String passwordInDatabase = resultSet.getString(1);
+
 			if (password.equals(passwordInDatabase)) {
 				return "success";
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return "failure";
 	}
 
