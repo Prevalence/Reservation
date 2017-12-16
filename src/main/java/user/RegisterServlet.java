@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -63,25 +64,18 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	private String register(String userName, String password) {
 		Connection conn = DBManager.INSTANCE.getConnection();
-		final String SQL = "select * from user where userName=?";
 		final String SQLForAdd = "insert into user values(?,?)";
 		try {
-			PreparedStatement preStatement = conn.prepareStatement(SQL);
-			preStatement.setString(1, userName);
-			ResultSet resultSet = preStatement.executeQuery();
-			if (resultSet.getFetchSize() == 0) {
-				PreparedStatement preStatementForAdd = conn.prepareStatement(SQLForAdd);
-				preStatementForAdd.setString(1, userName);
-				preStatementForAdd.setString(2, password);
-				preStatementForAdd.execute();
-				return "success";
-			} else {
-				return "duplicate";
-			}
+			PreparedStatement preStatementForAdd = conn.prepareStatement(SQLForAdd);
+			preStatementForAdd.setString(1, userName);
+			preStatementForAdd.setString(2, password);
+			preStatementForAdd.execute();
+			return "success";
+		} catch (SQLIntegrityConstraintViolationException e) {
+			return "duplicate";
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return "duplicate";
 	}
 
