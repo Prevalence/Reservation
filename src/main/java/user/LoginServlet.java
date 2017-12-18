@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String loginResult = login(userName, password);
 		if ("success".equals(loginResult)) {
-			response.sendRedirect("orders.jsp");
+			response.sendRedirect("OrdersServlet?userName=" + userName);
 		} else if ("failure".equals(loginResult)) {
 			response.sendRedirect("loginFail.jsp");
 		}
