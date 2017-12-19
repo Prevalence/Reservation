@@ -26,7 +26,6 @@ public class OrdersServlet extends HttpServlet {
 	 */
 	public OrdersServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -44,8 +43,17 @@ public class OrdersServlet extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.println("Not logged in, Please log in first!");
 			out.println("<a href=\"login.jsp\">login here</a>");
+			out.close();
 		} else {
-			String userName = (String) session.getAttribute("loginUserName");
+			String userName = "";
+			if (null != session.getAttribute("loginUserName"))
+				userName = (String) session.getAttribute("loginUserName");
+			else {
+				PrintWriter out = response.getWriter();
+				out.println("Not logged in, Please log in first!");
+				out.println("<a href=\"login.jsp\">login here</a>");
+				out.close();
+			}
 			int pageNow = 1;
 			if (null != request.getParameter("pageNow")) {
 				pageNow = Integer.valueOf(request.getParameter("pageNow"));
@@ -61,7 +69,6 @@ public class OrdersServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
@@ -119,9 +126,25 @@ public class OrdersServlet extends HttpServlet {
 				out.println("<a title='下一页' href='OrdersServlet?pageNow=" + (pageNow + 1) + "'>></a>");
 			}
 			// 显示分页信息
-			out.println("&nbsp;&nbsp;&nbsp;当前页" + pageNow + "/总共页数" + pageCount);
+			out.println("&nbsp;&nbsp;&nbsp;当前页" + pageNow + "/总共页数" + pageCount + "<br>");
+			checkhortage(userName, con, out);
+			out.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void checkhortage(String userName, Connection con, PrintWriter out) throws SQLException {
+		final String SQL = "select orders.`订单ID`,orders.`库存数量`,orders.`货物数量` from orders where orders.`货物数量` > orders.`库存数量`";
+		ResultSet result = con.prepareStatement(SQL).executeQuery();
+		result.last();
+		int resultSize = result.getRow();
+		System.out.println(resultSize);
+		result.beforeFirst();
+		if (resultSize > 0) {
+			while (result.next()) {
+				out.println(result.getInt(1) + " 号订单有缺货，库存剩余 " + result.getInt(2) + "，订购数量为 " + result.getInt(3));
+			}
 		}
 	}
 

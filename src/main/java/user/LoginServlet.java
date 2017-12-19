@@ -1,13 +1,13 @@
 package user;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +38,11 @@ public class LoginServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (null != session) {
 			session.setAttribute("loginUserName", userName);
+		} else {
+			PrintWriter out = response.getWriter();
+			out.println("Not logged in, Please log in first!");
+			out.println("<a href=\"login.jsp\">login here</a>");
+			out.close();
 		}
 		String loginResult = login(userName, password);
 		if ("success".equals(loginResult)) {
