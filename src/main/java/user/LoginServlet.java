@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import util.DBManager;
 
 /**
- * Servlet implementation class UserServlet
+ * Servlet implementation class LoginServlet
  */
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
