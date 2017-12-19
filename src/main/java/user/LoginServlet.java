@@ -7,9 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import util.DBManager;
 
@@ -33,9 +35,13 @@ public class LoginServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
+		HttpSession session = request.getSession(false);
+		if (null != session) {
+			session.setAttribute("loginUserName", userName);
+		}
 		String loginResult = login(userName, password);
 		if ("success".equals(loginResult)) {
-			response.sendRedirect("OrdersServlet?userName=" + userName);
+			response.sendRedirect("OrdersServlet");
 		} else if ("failure".equals(loginResult)) {
 			response.sendRedirect("loginFail.jsp");
 		}

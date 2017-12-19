@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import util.DBManager;
 
@@ -38,18 +39,40 @@ public class OrdersServlet extends HttpServlet {
 		response.setHeader("Content-type", "text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 
+		HttpSession session = request.getSession(false);
+		if (null == session) {
+			PrintWriter out = response.getWriter();
+			out.println("Not logged in, Please log in first!");
+			out.println("<a href=\"login.jsp\">login here</a>");
+		} else {
+			String userName = (String) session.getAttribute("loginUserName");
+			int pageNow = 1;
+			if (null != request.getParameter("pageNow")) {
+				pageNow = Integer.valueOf(request.getParameter("pageNow"));
+			}
+			displayOrders(2, pageNow, userName, response.getWriter());
+		}
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+	private void displayOrders(int pageSize, int pageNow, String userName, PrintWriter out) {
 		// 三个变量先初始化
-		int pageSize = 2;// 指定每一页显示3条记录
 		int pageCount = 1;// 总共的页数，该变量是计算出来的
 		int rowCount = 1;// 总共有多少条记录，该变量需要读取数据库得到
 		// 定义第四个变量，即当前要显示的页数，初始化为1
-		int pageNow = 1;
 		// 这个当前页是用户决定的，所以由用户请求参数来确定
 		// 这个参数是下文中<a>链接中的href传递过来的，形如：/UserManager/ManageUsers?pageNow=xx
-		String temp_pageNow = request.getParameter("pageNow");
-		if (temp_pageNow != null) {
-			pageNow = Integer.parseInt(temp_pageNow);
-		}
+
 		Connection con = DBManager.INSTANCE.getConnection();
 		// 下面要连接数据库读取数据了
 
@@ -57,7 +80,6 @@ public class OrdersServlet extends HttpServlet {
 		// 1.查询rowCount
 		PreparedStatement ps;
 		try {
-			String userName = request.getParameter("userName");
 			ps = con.prepareStatement("select count(*) from orders where userName=?");
 			ps.setString(1, userName);
 			ResultSet rs = ps.executeQuery();
@@ -72,7 +94,6 @@ public class OrdersServlet extends HttpServlet {
 			ps.setInt(2, pageSize * pageNow);
 
 			rs = ps.executeQuery();
-			PrintWriter out = response.getWriter();
 			out.println("<table border=1 width=800px align=center>");
 			out.println(
 					"<tr align=center><th>用户名</th><th>交易时间</th><th>货物</th><th>单价</th><th>数量</th><th>总价</th><th>订单ID</th></tr>");
@@ -102,37 +123,6 @@ public class OrdersServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
-	// private void getMessage(HttpServletRequest request, HttpServletResponse
-	// response)
-	// throws ServletException, IOException, SQLException {
-	//
-	// // 从jsp页面获取当前页数
-	// int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-	// // 查询数据库获得数据计算出总页数
-	// int countPage = messageService.getCountPage();
-	//
-	// // 将当前页数，总页数，以及找出的数据返回给jsp页面
-	// request.setAttribute("countPage", countPage);
-	// request.setAttribute("currentPage", currentPage);
-	// request.setAttribute("messages", messageService.getMessage(currentPage));
-	// request.getRequestDispatcher("getMessage.jsp").forward(request, response);
-	// }
-	//
-	// private int getTotalNumberOfOrders() {
-	// return 0;
-	// }
 
 }
