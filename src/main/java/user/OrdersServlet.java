@@ -135,7 +135,6 @@ public class OrdersServlet extends HttpServlet {
 		ResultSet result = con.prepareStatement(SQL).executeQuery();
 		result.last();
 		int resultSize = result.getRow();
-		System.out.println(resultSize);
 		result.beforeFirst();
 		if (resultSize > 0) {
 			while (result.next()) {

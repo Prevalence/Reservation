@@ -37,6 +37,7 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		HttpSession session = request.getSession(false);
 		if (null != session) {
+			session.setAttribute("onlineUserBindingListener", new UserListener());
 			session.setAttribute("loginUserName", userName);
 		} else {
 			PrintWriter out = response.getWriter();
