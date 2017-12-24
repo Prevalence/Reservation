@@ -61,7 +61,8 @@ public class OrdersServlet extends HttpServlet {
 			int totalNumberOfVisitor = (int) context.getAttribute("totalNumberOfVisitor");
 			int notLoggedIn = (int) context.getAttribute("not logged in");
 			int loggedIn = (int) context.getAttribute("logged in");
-			out.println("总在线人数： " + totalNumberOfVisitor + "   游客人数: " + notLoggedIn + "   已登陆人数： " + loggedIn);
+			out.println("<br>总在线人数： " + totalNumberOfVisitor + "   游客人数: " + notLoggedIn + "   已登陆人数： " + loggedIn);
+			out.println("<a href=\"LogOutServlet\">Log out</a>");
 			out.close();
 		}
 

@@ -44,11 +44,12 @@ public class CountUserListener implements HttpSessionListener {
 	public void sessionDestroyed(HttpSessionEvent se) {
 		ServletContext context = se.getSession().getServletContext();
 		HttpSession session = se.getSession();
+		System.out.println("被销毁的Session为 " + session);
 		// 这个Session已经登陆
-		if (null == session.getAttribute("userName")) {
-			context.setAttribute("logged in", (int) context.getAttribute("logged in") - 1);
-		} else {
+		if (null == session.getAttribute("loginUserName")) {
 			context.setAttribute("not logged in", (int) context.getAttribute("not logged in") - 1);
+		} else {
+			context.setAttribute("logged in", (int) context.getAttribute("logged in") - 1);
 		}
 		context.setAttribute("totalNumberOfVisitor", (int) context.getAttribute("totalNumberOfVisitor") - 1);
 		System.out.println("total: " + context.getAttribute("totalNumberOfVisitor"));
