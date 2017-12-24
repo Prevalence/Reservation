@@ -1,4 +1,4 @@
-package user;
+package util;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSessionBindingEvent;
@@ -22,11 +22,11 @@ public class UserListener implements HttpSessionBindingListener {
 	public void valueBound(HttpSessionBindingEvent event) {
 		ServletContext context = event.getSession().getServletContext();
 		if (null == context.getAttribute("numberOfUser")) {
-			context.setAttribute("numberOfUser", 0);
+			context.setAttribute("numberOfUser", 1);
 		} else {
 			context.setAttribute("numberOfUser", (int) context.getAttribute("numberOfUser") + 1);
-			System.out.println(context.getAttribute("numberOfUser"));
 		}
+		System.out.println(context.getAttribute("numberOfUser"));
 	}
 
 	/**
@@ -38,8 +38,8 @@ public class UserListener implements HttpSessionBindingListener {
 			context.setAttribute("numberOfUser", 0);
 		} else {
 			context.setAttribute("numberOfUser", (int) context.getAttribute("numberOfUser") - 1);
-			System.out.println(context.getAttribute("numberOfUser"));
 		}
+		System.out.println(context.getAttribute("numberOfUser"));
 	}
 
 }

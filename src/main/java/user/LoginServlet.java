@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import util.DBManager;
+import util.UserListener;
 
 /**
  * Servlet implementation class LoginServlet
@@ -37,8 +39,7 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		HttpSession session = request.getSession(false);
 		if (null != session) {
-			session.setAttribute("onlineUserBindingListener", new UserListener());
-			session.setAttribute("loginUserName", userName);
+
 		} else {
 			PrintWriter out = response.getWriter();
 			out.println("Not logged in, Please log in first!");
@@ -47,6 +48,12 @@ public class LoginServlet extends HttpServlet {
 		}
 		String loginResult = login(userName, password);
 		if ("success".equals(loginResult)) {
+			if (null == session.getAttribute("loginUserName")) {
+				ServletContext context = request.getServletContext();
+				context.setAttribute("logged in", (int) context.getAttribute("logged in") + 1);
+				context.setAttribute("not logged in", (int) context.getAttribute("not logged in") - 1);
+			}
+			session.setAttribute("loginUserName", userName);
 			response.sendRedirect("OrdersServlet");
 		} else if ("failure".equals(loginResult)) {
 			response.sendRedirect("loginFail.jsp");

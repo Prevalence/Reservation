@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +55,14 @@ public class OrdersServlet extends HttpServlet {
 			if (null != request.getParameter("pageNow")) {
 				pageNow = Integer.valueOf(request.getParameter("pageNow"));
 			}
-			displayOrders(2, pageNow, userName, response.getWriter());
+			PrintWriter out = response.getWriter();
+			displayOrders(2, pageNow, userName, out);
+			ServletContext context = request.getSession().getServletContext();
+			int totalNumberOfVisitor = (int) context.getAttribute("totalNumberOfVisitor");
+			int notLoggedIn = (int) context.getAttribute("not logged in");
+			int loggedIn = (int) context.getAttribute("logged in");
+			out.println("总在线人数： " + totalNumberOfVisitor + "   游客人数: " + notLoggedIn + "   已登陆人数： " + loggedIn);
+			out.close();
 		}
 
 	}
@@ -124,7 +132,6 @@ public class OrdersServlet extends HttpServlet {
 			// 显示分页信息
 			out.println("&nbsp;&nbsp;&nbsp;当前页" + pageNow + "/总共页数" + pageCount + "<br>");
 			checkhortage(userName, con, out);
-			out.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
