@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import util.DBManager;
-import util.UserListener;
 
 /**
  * Servlet implementation class LoginServlet

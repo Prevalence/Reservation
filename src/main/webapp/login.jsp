@@ -14,5 +14,9 @@
 			name="password" type="text" id="password" style="width: 120px"><br>
 		<br> <input type="submit" name="Submit" value="提交">
 	</form>
+	<%
+		out.println("总人数为：" + application.getAttribute("totalNumberOfVisitor") + "   游客人数为："
+				+ application.getAttribute("not logged in") + "   已登录人数为：" + application.getAttribute("logged in"));
+	%>
 </body>
 </html>
