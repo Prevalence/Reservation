@@ -21,25 +21,25 @@
 		<servlet-name>LoginServlet</servlet-name>
 		<display-name>LoginServlet</display-name>
 		<description></description>
-		<servlet-class>user.LoginServlet</servlet-class>
+		<servlet-class>servlet.LoginServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>RegisterServlet</servlet-name>
 		<display-name>RegisterServlet</display-name>
 		<description></description>
-		<servlet-class>user.RegisterServlet</servlet-class>
+		<servlet-class>servlet.RegisterServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>OrdersServlet</servlet-name>
 		<display-name>OrdersServlet</display-name>
 		<description></description>
-		<servlet-class>user.OrdersServlet</servlet-class>
+		<servlet-class>servlet.OrdersServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>LogOutServlet</servlet-name>
 		<display-name>LogOutServlet</display-name>
 		<description></description>
-		<servlet-class>user.LogOutServlet</servlet-class>
+		<servlet-class>servlet.LogOutServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
