@@ -51,10 +51,12 @@ public class OrdersServlet extends HttpServlet {
 				out.println("<a href=\"login.jsp\">login here</a>");
 				out.close();
 			}
+
 			int pageNow = 1;
 			if (null != request.getParameter("pageNow")) {
 				pageNow = Integer.valueOf(request.getParameter("pageNow"));
 			}
+
 			PrintWriter out = response.getWriter();
 			displayOrders(2, pageNow, userName, out);
 			ServletContext context = request.getSession().getServletContext();
