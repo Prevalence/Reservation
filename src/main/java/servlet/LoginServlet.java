@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import service.UserService;
 import util.DBManager;
 
 /**
@@ -21,6 +22,10 @@ import util.DBManager;
  */
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 业务逻辑层接口
+	 */
+	private UserService userService = UserService.getImplments();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -45,7 +50,7 @@ public class LoginServlet extends HttpServlet {
 			out.println("<a href=\"login.jsp\">login here</a>");
 			out.close();
 		}
-		String loginResult = login(userName, password);
+		String loginResult = userService.login(userName, password);
 		if ("success".equals(loginResult)) {
 			if (null == session.getAttribute("loginUserName")) {
 				ServletContext context = request.getServletContext();
@@ -65,34 +70,6 @@ public class LoginServlet extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
-	}
-
-	/**
-	 * 登陆
-	 * 
-	 * @param userName
-	 *            用户名
-	 * @param password
-	 *            密码
-	 * @return
-	 */
-	private String login(String userName, String password) {
-		Connection conn = DBManager.INSTANCE.getConnection();
-		final String SQL = "select password from user where userName=?";
-		try {
-			PreparedStatement preStatement = conn.prepareStatement(SQL);
-			preStatement.setString(1, userName);
-			ResultSet resultSet = preStatement.executeQuery();
-			resultSet.next();
-			String passwordInDatabase = resultSet.getString(1);
-			preStatement.close();
-			if (password.equals(passwordInDatabase)) {
-				return "success";
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return "failure";
 	}
 
 }

@@ -1,5 +1,7 @@
 package dao;
 
+import model.User;
+
 /**
  * Dao层接口
  * 
@@ -21,13 +23,11 @@ public interface UserDao {
 	/**
 	 * 注册
 	 * 
-	 * @param userName
-	 *            用户名
-	 * @param password
-	 *            密码
+	 * @param user
+	 *            用户对象
 	 * @return "success"或者"duplicate"
 	 */
-	public String register(String userName, String password);
+	public String register(User user);
 
 	/**
 	 * 获取实现的方法

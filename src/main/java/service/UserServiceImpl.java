@@ -1,6 +1,7 @@
 package service;
 
 import dao.UserDao;
+import model.User;
 
 /**
  * service层实现
@@ -16,12 +17,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String login(String userName, String password) {
-		return null;
+		return userdao.login(userName, password);
 	}
 
 	@Override
-	public String register(String userName, String password) {
-		return null;
+	public String register(User user) {
+		return userdao.register(user);
 	}
 
 }

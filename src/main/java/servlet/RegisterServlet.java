@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javafx.css.PseudoClass;
+import model.User;
+import service.UserService;
 import util.DBManager;
 
 /**
@@ -18,6 +21,10 @@ import util.DBManager;
  */
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 业务逻辑层接口
+	 */
+	private UserService userService = UserService.getImplments();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -35,7 +42,8 @@ public class RegisterServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
-		String registerResult = register(userName, password);
+		User user = new User(userName, password);
+		String registerResult = userService.register(user);
 		if ("success".equals(registerResult)) {
 			response.sendRedirect("registerSuccess.jsp");
 		} else if ("duplicate".equals(registerResult)) {
@@ -50,33 +58,6 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
-	}
-
-	/**
-	 * 注册
-	 * 
-	 * @param userName
-	 *            用户名
-	 * @param password
-	 *            密码
-	 * @return 注册结果
-	 */
-	private String register(String userName, String password) {
-		Connection conn = DBManager.INSTANCE.getConnection();
-		final String SQLForAdd = "insert into user values(?,?)";
-		try {
-			PreparedStatement preStatementForAdd = conn.prepareStatement(SQLForAdd);
-			preStatementForAdd.setString(1, userName);
-			preStatementForAdd.setString(2, password);
-			preStatementForAdd.execute();
-			preStatementForAdd.close();
-			return "success";
-		} catch (SQLIntegrityConstraintViolationException e) {
-			return "duplicate";
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return "duplicate";
 	}
 
 }

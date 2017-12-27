@@ -1,5 +1,7 @@
 package service;
 
+import model.User;
+
 public interface UserService {
 	/**
 	 * 登陆
@@ -15,13 +17,11 @@ public interface UserService {
 	/**
 	 * 注册
 	 * 
-	 * @param userName
-	 *            用户名
-	 * @param password
-	 *            密码
+	 * @param user
+	 *            user对象
 	 * @return "success"或者"duplicate"
 	 */
-	public String register(String userName, String password);
+	public String register(User user);
 
 	/**
 	 * 获取实现
