@@ -2,11 +2,6 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import service.UserService;
-import util.DBManager;
 
 /**
  * Servlet implementation class LoginServlet
@@ -54,8 +48,8 @@ public class LoginServlet extends HttpServlet {
 		if ("success".equals(loginResult)) {
 			if (null == session.getAttribute("loginUserName")) {
 				ServletContext context = request.getServletContext();
-				context.setAttribute("logged in", (int) context.getAttribute("logged in") + 1);
-				context.setAttribute("not logged in", (int) context.getAttribute("not logged in") - 1);
+				context.setAttribute("loggedIn", (int) context.getAttribute("loggedIn") + 1);
+				context.setAttribute("tourist", (int) context.getAttribute("tourist") - 1);
 			}
 			session.setAttribute("loginUserName", userName);
 			response.sendRedirect("OrdersServlet");

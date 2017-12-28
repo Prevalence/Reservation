@@ -16,7 +16,7 @@
 	</form>
 	<%
 		out.println("总人数为：" + application.getAttribute("totalNumberOfVisitor") + "   游客人数为："
-				+ application.getAttribute("not logged in") + "   已登录人数为：" + application.getAttribute("logged in"));
+				+ application.getAttribute("tourist") + "   已登录人数为：" + application.getAttribute("loggedIn"));
 	%>
 </body>
 </html>

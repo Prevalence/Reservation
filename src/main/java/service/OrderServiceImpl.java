@@ -6,11 +6,11 @@ import dao.OrderDao;
 import model.Order;
 
 public class OrderServiceImpl implements OrderService {
-	private OrderDao orderdao;
+	private OrderDao orderDao = OrderDao.getImplments();
 
 	@Override
 	public List<Order> getOrders(String userName) {
-		return null;
+		return orderDao.findOrders(userName);
 	}
 
 }

@@ -26,15 +26,15 @@ public class CountUserListener implements HttpSessionListener {
 		ServletContext context = se.getSession().getServletContext();
 		if (null == context.getAttribute("totalNumberOfVisitor")) {
 			context.setAttribute("totalNumberOfVisitor", 1);
-			context.setAttribute("logged in", 0);
-			context.setAttribute("not logged in", 1);
+			context.setAttribute("loggedIn", 0);
+			context.setAttribute("tourist", 1);
 		} else {
 			context.setAttribute("totalNumberOfVisitor", (int) context.getAttribute("totalNumberOfVisitor") + 1);
-			context.setAttribute("not logged in", (int) context.getAttribute("not logged in") + 1);
+			context.setAttribute("tourist", (int) context.getAttribute("tourist") + 1);
 		}
 		System.out.println("total: " + context.getAttribute("totalNumberOfVisitor"));
-		System.out.println("log in: " + context.getAttribute("logged in"));
-		System.out.println("not logged in: " + context.getAttribute("not logged in"));
+		System.out.println("log in: " + context.getAttribute("loggedIn"));
+		System.out.println("not logged in: " + context.getAttribute("tourist"));
 
 	}
 
@@ -47,14 +47,14 @@ public class CountUserListener implements HttpSessionListener {
 		System.out.println("被销毁的Session为 " + session);
 		// 这个Session已经登陆
 		if (null == session.getAttribute("loginUserName")) {
-			context.setAttribute("not logged in", (int) context.getAttribute("not logged in") - 1);
+			context.setAttribute("tourist", (int) context.getAttribute("tourist") - 1);
 		} else {
-			context.setAttribute("logged in", (int) context.getAttribute("logged in") - 1);
+			context.setAttribute("loggedIn", (int) context.getAttribute("loggedIn") - 1);
 		}
 		context.setAttribute("totalNumberOfVisitor", (int) context.getAttribute("totalNumberOfVisitor") - 1);
 		System.out.println("total: " + context.getAttribute("totalNumberOfVisitor"));
-		System.out.println("log in: " + context.getAttribute("logged in"));
-		System.out.println("not logged in: " + context.getAttribute("not logged in"));
+		System.out.println("log in: " + context.getAttribute("loggedIn"));
+		System.out.println("not logged in: " + context.getAttribute("tourist"));
 	}
 
 }

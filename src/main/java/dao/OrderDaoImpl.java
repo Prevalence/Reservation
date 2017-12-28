@@ -17,7 +17,7 @@ public class OrderDaoImpl implements OrderDao {
 		Connection con = DBManager.INSTANCE.getConnection();
 		PreparedStatement ps;
 		try {
-			ps = con.prepareStatement("select count(*) from orders where userName=?");
+			ps = con.prepareStatement("select * from orders where userName=?");
 			ps.setString(1, userName);
 			ResultSet rs = ps.executeQuery();
 			ArrayList<Order> ordersList = new ArrayList<Order>();
@@ -29,8 +29,9 @@ public class OrderDaoImpl implements OrderDao {
 			return ordersList;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return new ArrayList<Order>();
+
 		}
-		return null;
 	}
 
 }

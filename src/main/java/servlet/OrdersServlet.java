@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Order;
+import service.OrderService;
 import util.DBManager;
 
 /**
@@ -21,6 +24,7 @@ import util.DBManager;
  */
 public class OrdersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static OrderService orderService = OrderService.getImplement();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -55,17 +59,22 @@ public class OrdersServlet extends HttpServlet {
 			int pageNow = 1;
 			if (null != request.getParameter("pageNow")) {
 				pageNow = Integer.valueOf(request.getParameter("pageNow"));
+			} else {
+				request.setAttribute("pageNow", pageNow);
 			}
+			/**
+			 * 获得总订单
+			 */
+			ArrayList<Order> allOrders = (ArrayList<Order>) orderService.getOrders(userName);
+			System.out.println(allOrders.size());
+			final int PAGE_SIZE = 2;
+			/**
+			 * 根据当前页号，绑定子List到Session上
+			 */
+			session.setAttribute("orderList", allOrders.subList(PAGE_SIZE * (pageNow - 1), PAGE_SIZE * pageNow));
 
-			PrintWriter out = response.getWriter();
-			displayOrders(2, pageNow, userName, out);
-			ServletContext context = request.getSession().getServletContext();
-			int totalNumberOfVisitor = (int) context.getAttribute("totalNumberOfVisitor");
-			int notLoggedIn = (int) context.getAttribute("not logged in");
-			int loggedIn = (int) context.getAttribute("logged in");
-			out.println("<br>总在线人数： " + totalNumberOfVisitor + "   游客人数: " + notLoggedIn + "   已登陆人数： " + loggedIn);
-			out.println("<a href=\"LogOutServlet\">Log out</a>");
-			out.close();
+			request.getRequestDispatcher("order.jsp").forward(request, response);
+
 		}
 
 	}
