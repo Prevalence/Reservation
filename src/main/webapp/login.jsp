@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+	pageEncoding="utf-8" isELIgnored="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,9 +14,7 @@
 			name="password" type="text" id="password" style="width: 120px"><br>
 		<br> <input type="submit" name="Submit" value="提交">
 	</form>
-	<%
-		out.println("总人数为：" + application.getAttribute("totalNumberOfVisitor") + "   游客人数为："
-				+ application.getAttribute("tourist") + "   已登录人数为：" + application.getAttribute("loggedIn"));
-	%>
+	<p>总在线人数: ${applicationScope.totalNumberOfVisitor} 游客人数：
+		${applicationScope.tourist} 已登录人数： ${applicationScope.loggedIn}</p>
 </body>
 </html>

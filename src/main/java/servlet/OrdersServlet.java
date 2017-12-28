@@ -59,18 +59,21 @@ public class OrdersServlet extends HttpServlet {
 			int pageNow = 1;
 			if (null != request.getParameter("pageNow")) {
 				pageNow = Integer.valueOf(request.getParameter("pageNow"));
+				System.out.println("得到pageNow");
 			} else {
+				System.out.println("初次建立pageNow");
 				request.setAttribute("pageNow", pageNow);
 			}
 			/**
 			 * 获得总订单
 			 */
 			ArrayList<Order> allOrders = (ArrayList<Order>) orderService.getOrders(userName);
-			System.out.println(allOrders.size());
-			final int PAGE_SIZE = 2;
+			final int PAGE_SIZE = 1;
+			session.setAttribute("totalPage", allOrders.size() / PAGE_SIZE);
 			/**
 			 * 根据当前页号，绑定子List到Session上
 			 */
+			System.out.println("传递过来的页号：" + pageNow);
 			session.setAttribute("orderList", allOrders.subList(PAGE_SIZE * (pageNow - 1), PAGE_SIZE * pageNow));
 
 			request.getRequestDispatcher("order.jsp").forward(request, response);
@@ -130,7 +133,6 @@ public class OrdersServlet extends HttpServlet {
 			out.println("<br>");
 			// 显示上一页，注意href的写法
 			if (pageNow != 1) {
-				out.println("<a title='上一页' href='OrdersServlet?pageNow=" + (pageNow - 1) + "'><</a>");
 			}
 			// 显示分页
 			for (int i = 1; i <= pageCount; i++) {
@@ -139,7 +141,7 @@ public class OrdersServlet extends HttpServlet {
 			}
 			// 显示下一页
 			if (pageNow != pageCount) {
-				out.println("<a title='下一页' href='OrdersServlet?pageNow=" + (pageNow + 1) + "'>></a>");
+				out.println("<a title='下一页' href='OrdersServlet?pageNow=" + (pageNow + 1) + "'>&gt;</a>");
 			}
 			// 显示分页信息
 			out.println("&nbsp;&nbsp;&nbsp;当前页" + pageNow + "/总共页数" + pageCount + "<br>");

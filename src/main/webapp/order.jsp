@@ -31,6 +31,30 @@
 			</tr>
 		</c:forEach>
 	</table>
+
+	<c:url var="ordersServletPath" value="OrderServlet" scope="page">
+	</c:url>
+
+	<c:if test="${requestScope.pageNow!=1}">
+		${requestScope.pageNow}
+		<a title='上一页'
+			href="${pageScope.orderServletPath}?pageNow=${requestScope.pageNow-1}">&lt;</a>
+	</c:if>
+
+	<c:forEach var="i" begin="1" end="${sessionScope.totalPage }">
+		<a href="${pageScope.orderServletPath}?pageNow=${i}">${i} </a>
+	</c:forEach>
+
+	<c:if test="${requestScope.pageNow!=sessionScope.totalPage}">
+	${requestScope.pageNow}
+		<a title='下一页'
+			href="${pageScope.orderServletPath}?pageNow=${requestScope.pageNow+1}">&gt;</a>
+	</c:if>
+
+	&nbsp;&nbsp;&nbsp;当前页 ${requestScope.pageNow} 总共页数
+	${sessionScope.totalPage}
+	<br>
+
 	<br>
 	<p>总在线人数: ${applicationScope.totalNumberOfVisitor} 游客人数：
 		${applicationScope.tourist} 已登录人数： ${applicationScope.loggedIn}</p>
