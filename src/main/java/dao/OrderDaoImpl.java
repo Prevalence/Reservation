@@ -26,12 +26,11 @@ public class OrderDaoImpl implements OrderDao {
 						rs.getInt(5), rs.getDouble(6));
 				ordersList.add(order);
 			}
-			System.out.println("完成订单查找");
+			con.close();
 			return ordersList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return new ArrayList<Order>();
-
 		}
 	}
 
