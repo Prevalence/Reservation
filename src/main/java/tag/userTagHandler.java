@@ -1,5 +1,7 @@
 package tag;
 
+import java.io.IOException;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
@@ -9,7 +11,6 @@ public class userTagHandler extends BodyTagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {
-		System.out.println(pageContext.getSession().getAttribute("loginUserName"));
 		return super.doStartTag();
 	}
 
@@ -20,7 +21,14 @@ public class userTagHandler extends BodyTagSupport {
 
 	@Override
 	public int doEndTag() throws JspException {
-		// TODO Auto-generated method stub
-		return SKIP_PAGE;
+		if (null == pageContext.getSession() || null == pageContext.getSession().getAttribute("loginUserName")) {
+			try {
+				getPreviousOut().write("Please login first!<br><a href=\"login.jsp\">Login Here</a>");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return SKIP_PAGE;
+		}
+		return EVAL_PAGE;
 	}
 }
