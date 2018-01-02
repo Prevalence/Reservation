@@ -54,6 +54,7 @@ public class OrdersServlet extends HttpServlet {
 				out.println("Not logged in, Please log in first!");
 				out.println("<a href=\"login.jsp\">login here</a>");
 				out.close();
+				return;
 			}
 
 			int pageNow = 1;
