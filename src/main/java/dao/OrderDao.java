@@ -2,8 +2,11 @@ package dao;
 
 import java.util.List;
 
+import javax.ejb.Remote;
+
 import model.Order;
 
+@Remote
 public interface OrderDao {
 	/**
 	 * 查找某个用户的订单
@@ -14,7 +17,4 @@ public interface OrderDao {
 	 */
 	public List<Order> findOrders(String userName);
 
-	public static OrderDao getImplments() {
-		return new OrderDaoImpl();
-	}
 }

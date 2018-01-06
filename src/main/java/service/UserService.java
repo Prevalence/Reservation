@@ -1,7 +1,10 @@
 package service;
 
+import javax.ejb.Remote;
+
 import model.User;
 
+@Remote
 public interface UserService {
 	/**
 	 * 登陆
@@ -23,12 +26,4 @@ public interface UserService {
 	 */
 	public String register(User user);
 
-	/**
-	 * 获取实现
-	 * 
-	 * @return
-	 */
-	public static UserService getImplments() {
-		return new UserServiceImpl();
-	}
 }

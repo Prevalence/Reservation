@@ -3,12 +3,10 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,14 +15,14 @@ import javax.servlet.http.HttpSession;
 
 import model.Order;
 import service.OrderService;
-import util.DBManager;
+import util.Factory;
 
 /**
  * Servlet implementation class OrdersServlet
  */
 public class OrdersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static OrderService orderService = OrderService.getImplement();
+	private static OrderService orderService = Factory.getOrderServiceImpl();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -73,7 +71,7 @@ public class OrdersServlet extends HttpServlet {
 			 * 根据当前页号，绑定子List到Session上
 			 */
 			session.setAttribute("orderList", allOrders.subList(PAGE_SIZE * (pageNow - 1), PAGE_SIZE * pageNow));
-
+			System.out.println(allOrders.size());
 			request.getRequestDispatcher("order.jsp").forward(request, response);
 
 		}

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import service.UserService;
+import util.Factory;
 
 /**
  * Servlet implementation class LoginServlet
@@ -19,7 +20,7 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * 业务逻辑层接口
 	 */
-	private UserService userService = UserService.getImplments();
+	private UserService userService = Factory.getUserServiceImpl();
 
 	/**
 	 * @see HttpServlet#HttpServlet()

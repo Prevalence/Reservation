@@ -1,8 +1,12 @@
 package model;
 
-import java.sql.Time;
+import java.io.Serializable;
 
-public class Order {
+public class Order implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 用户名</th><th>交易时间</th><th>货物</th><th>单价</th><th>数量</th><th>总价</th><th>订单ID
 	/**
 	 * 订单ID

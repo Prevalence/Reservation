@@ -1,13 +1,10 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
-
-<web-app>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+                        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
 	<display-name>Archetype Created Web Application</display-name>
 	<filter>
 		<filter-name>EncodingFilter</filter-name>
-		<display-name>EncodingFilter</display-name>
-		<description></description>
 		<filter-class>util.EncodingFilter</filter-class>
 	</filter>
 	<filter-mapping>
@@ -19,26 +16,18 @@
 	</listener>
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
-		<display-name>LoginServlet</display-name>
-		<description></description>
 		<servlet-class>servlet.LoginServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>RegisterServlet</servlet-name>
-		<display-name>RegisterServlet</display-name>
-		<description></description>
 		<servlet-class>servlet.RegisterServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>OrdersServlet</servlet-name>
-		<display-name>OrdersServlet</display-name>
-		<description></description>
 		<servlet-class>servlet.OrdersServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>LogOutServlet</servlet-name>
-		<display-name>LogOutServlet</display-name>
-		<description></description>
 		<servlet-class>servlet.LogOutServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -57,12 +46,4 @@
 		<servlet-name>LogOutServlet</servlet-name>
 		<url-pattern>/LogOutServlet</url-pattern>
 	</servlet-mapping>
-
-	<!-- for JNDI Data Source -->
-	<resource-ref>
-		<description>MySQL DB Connection</description>
-		<res-ref-name>myJDBC</res-ref-name>
-		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
-	</resource-ref>
 </web-app>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.User;
 import service.UserService;
+import util.Factory;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -18,7 +19,7 @@ public class RegisterServlet extends HttpServlet {
 	/**
 	 * 业务逻辑层接口
 	 */
-	private UserService userService = UserService.getImplments();
+	private UserService userService = Factory.getUserServiceImpl();
 
 	/**
 	 * @see HttpServlet#HttpServlet()

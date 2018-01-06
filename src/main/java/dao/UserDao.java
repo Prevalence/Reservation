@@ -1,5 +1,7 @@
 package dao;
 
+import javax.ejb.Remote;
+
 import model.User;
 
 /**
@@ -8,6 +10,7 @@ import model.User;
  * @author njdx
  *
  */
+@Remote
 public interface UserDao {
 	/**
 	 * 登陆
@@ -29,12 +32,4 @@ public interface UserDao {
 	 */
 	public String register(User user);
 
-	/**
-	 * 获取实现的方法
-	 * 
-	 * @return
-	 */
-	public static UserDao getImplements() {
-		return new UserDaoImpl();
-	}
 }
