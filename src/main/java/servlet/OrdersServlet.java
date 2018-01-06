@@ -71,7 +71,6 @@ public class OrdersServlet extends HttpServlet {
 			 * 根据当前页号，绑定子List到Session上
 			 */
 			session.setAttribute("orderList", allOrders.subList(PAGE_SIZE * (pageNow - 1), PAGE_SIZE * pageNow));
-			System.out.println(allOrders.size());
 			request.getRequestDispatcher("order.jsp").forward(request, response);
 
 		}
