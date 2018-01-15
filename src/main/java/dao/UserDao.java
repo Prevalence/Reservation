@@ -1,8 +1,14 @@
-package service;
+package dao;
 
 import model.User;
 
-public interface UserService {
+/**
+ * Dao层接口
+ * 
+ * @author njdx
+ *
+ */
+public interface UserDao {
 	/**
 	 * 登陆
 	 * 
@@ -18,7 +24,7 @@ public interface UserService {
 	 * 注册
 	 * 
 	 * @param user
-	 *            user对象
+	 *            用户对象
 	 * @return "success"或者"duplicate"
 	 */
 	public String register(User user);

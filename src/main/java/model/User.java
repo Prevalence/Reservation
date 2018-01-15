@@ -2,12 +2,16 @@ package model;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * 用户实体类
  * 
  * @author njdx
  *
  */
+@Entity
 public class User implements Serializable {
 	/**
 	 * 
@@ -16,6 +20,7 @@ public class User implements Serializable {
 	/**
 	 * 用户名
 	 */
+	@Id
 	private String userName;
 	/**
 	 * 用户密码
@@ -26,6 +31,10 @@ public class User implements Serializable {
 		super();
 		this.userName = userName;
 		this.password = password;
+	}
+
+	public User() {
+		super();
 	}
 
 	public String getUserName() {

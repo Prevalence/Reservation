@@ -2,6 +2,12 @@ package model;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "`order`")
 public class Order implements Serializable {
 	/**
 	 * 
@@ -11,6 +17,7 @@ public class Order implements Serializable {
 	/**
 	 * 订单ID
 	 */
+	@Id
 	private int ID;
 	/**
 	 * 订单用户名
@@ -46,6 +53,10 @@ public class Order implements Serializable {
 		this.unitPrice = unitPrice;
 		this.number = number;
 		this.totalPrice = totalPrice;
+	}
+
+	public Order() {
+		super();
 	}
 
 	public int getID() {

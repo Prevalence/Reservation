@@ -1,35 +1,39 @@
 package util;
 
-import java.util.Hashtable;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
+import dao.OrderDao;
+import dao.OrderDaoImpl;
+import dao.UserDao;
+import dao.UserDaoImpl;
 import service.OrderService;
+import service.OrderServiceImpl;
 import service.UserService;
+import service.UserServiceImpl;
 
 public class Factory {
+	private static OrderDao orderDaoImpl = new OrderDaoImpl();
+
+	private static UserDao userDaoImpl = new UserDaoImpl();
+
+	private static OrderService orderServiceImpl = new OrderServiceImpl();
+
+	private static UserService userServiceImpl = new UserServiceImpl();
+
 	public static OrderService getOrderServiceImpl() {
-		final String URL = "ejb:/J2EEServer/OrderServiceImpl!service.OrderService";
-		return (OrderService) getEJB(URL);
+		return orderServiceImpl;
 	}
 
 	public static UserService getUserServiceImpl() {
-		final String URL = "ejb:/J2EEServer/UserServiceImpl!service.UserService";
-		return (UserService) getEJB(URL);
+		System.out.println("get Service");
+		return userServiceImpl;
 	}
 
-	private static Object getEJB(String JNDIPath) {
-		Hashtable<String, String> jndiProperties = new Hashtable<>();
-		jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-		try {
-			Context context = new InitialContext(jndiProperties);
-			return context.lookup(JNDIPath);
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-		return null;
-
+	public static OrderDao getOrderDaoImpl() {
+		return orderDaoImpl;
 	}
+
+	public static UserDao getUserDaoImpl() {
+		System.out.println("method");
+		return userDaoImpl;
+	}
+
 }
