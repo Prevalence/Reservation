@@ -31,18 +31,6 @@
 			<artifactId>hibernate-commons-annotations</artifactId>
 			<version>5.0.1.Final</version>
 		</dependency>
-		<!-- hibernate-core核心依赖包 -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.2.10.Final</version>
-		</dependency>
-		<!-- hibernate-commons-annotations依赖包 -->
-		<dependency>
-			<groupId>org.hibernate.common</groupId>
-			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>5.0.1.Final</version>
-		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
