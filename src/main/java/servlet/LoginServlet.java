@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import config.SpringConfig;
 import service.UserService;
-import util.Factory;
 
 /**
  * Servlet implementation class LoginServlet
@@ -20,13 +23,21 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * 业务逻辑层接口
 	 */
-	private UserService userService = Factory.getUserServiceImpl();
+	private UserService userService;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public LoginServlet() {
 		super();
+	}
+
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		@SuppressWarnings("resource")
+		ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfig.class);
+		userService = (UserService) ctx.getBean(UserService.class);
 	}
 
 	/**

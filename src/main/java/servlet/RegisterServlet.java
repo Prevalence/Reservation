@@ -7,9 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import config.SpringConfig;
 import model.User;
 import service.UserService;
-import util.Factory;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -19,14 +23,14 @@ public class RegisterServlet extends HttpServlet {
 	/**
 	 * 业务逻辑层接口
 	 */
-	private UserService userService = Factory.getUserServiceImpl();
+	private UserService userService;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public RegisterServlet() {
-		super();
-		// TODO Auto-generated constructor stub
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		@SuppressWarnings("resource")
+		ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfig.class);
+		userService = (UserService) ctx.getBean(UserService.class);
 	}
 
 	/**

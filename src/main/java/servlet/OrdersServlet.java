@@ -13,22 +13,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import config.SpringConfig;
 import model.Order;
 import service.OrderService;
-import util.Factory;
 
 /**
  * Servlet implementation class OrdersServlet
  */
 public class OrdersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static OrderService orderService = Factory.getOrderServiceImpl();
+	private static OrderService orderService;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public OrdersServlet() {
-		super();
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		@SuppressWarnings("resource")
+		ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfig.class);
+		orderService = (OrderService) ctx.getBean(OrderService.class);
 	}
 
 	/**
