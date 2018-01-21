@@ -25,6 +25,9 @@ import service.OrderService;
  */
 public class OrdersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 业务逻辑层对象
+	 */
 	private static OrderService orderService;
 
 	@Override
